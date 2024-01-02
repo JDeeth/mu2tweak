@@ -12,4 +12,6 @@ This is a Rust X-Plane plugin which makes some minor tweaks for the [TOGA Simula
 
 - [ ] Radio altimeter less precise
 - [ ] Electrical bus voltage datarefs for radio equipment
+- [ ] Leading zeros for HSI course and distance digital displays
 - [ ] Roller-counter avionics more interoperable
+- [ ] Commands to move condition levers to MIN CRUISE and 100% positions

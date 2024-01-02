@@ -1,14 +1,25 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+extern crate xplm;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use xplm::plugin::{Plugin, PluginInfo};
+use xplm::{debugln, xplane_plugin};
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+struct Mu2Tweaks;
+
+impl Plugin for Mu2Tweaks {
+    type Error = std::convert::Infallible;
+
+    fn start() -> Result<Self, Self::Error> {
+        debugln!("Hello, world! From the MU-2 Tweaks plugin.");
+        Ok(Mu2Tweaks)
+    }
+
+    fn info(&self) -> PluginInfo {
+        PluginInfo {
+            name: String::from("MU-2 Tweaks"),
+            signature: String::from("com.jdeeth.mu2tweaks"),
+            description: String::from("Tweaked UI datarefs for TOGASim MU-2"),
+        }
     }
 }
+
+xplane_plugin!(Mu2Tweaks);
