@@ -1,0 +1,15 @@
+# MU-2 Tweaks
+
+This is a Rust X-Plane plugin which makes some minor tweaks for the [TOGA Simulations MU-2](https://www.x-aviation.com/catalog/product_info.php/toga-simulations-marquise-p-226).
+
+## Target
+
+- Latest X-Plane 12 version (currently 12.0.8)
+- Latest MU-2 (currently 2.1.0)
+- All OSes - which is easy in Rust via cross-compilation
+
+## Features
+
+- [ ] Radio altimeter less precise
+- [ ] Electrical bus voltage datarefs for radio equipment
+- [ ] Roller-counter avionics more interoperable
