@@ -8,9 +8,9 @@ This is a Rust X-Plane plugin which makes some minor tweaks for the [TOGA Simula
 - Latest MU-2 (currently 2.1.0)
 - All OSes - which is easy in Rust via cross-compilation
 
-## Features
+## Features / Backlog
 
-- [ ] Radio altimeter less precise
+- [x] Radio altimeter less precise
 - [ ] Electrical bus voltage datarefs for radio equipment
 - [ ] Leading zeros for HSI course and distance digital displays
 - [ ] Roller-counter avionics more interoperable

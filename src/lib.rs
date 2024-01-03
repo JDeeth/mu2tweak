@@ -1,16 +1,28 @@
 extern crate xplm;
 
 use xplm::plugin::{Plugin, PluginInfo};
-use xplm::{debugln, xplane_plugin};
+use xplm::xplane_plugin;
 
-struct Mu2Tweaks;
+mod radalt;
+use radalt::FilteredRadAlt;
+
+struct Mu2Tweaks {
+    _radalt: FilteredRadAlt,
+}
+
+impl Mu2Tweaks {
+    fn new() -> Self {
+        Self {
+            _radalt: FilteredRadAlt::new(),
+        }
+    }
+}
 
 impl Plugin for Mu2Tweaks {
     type Error = std::convert::Infallible;
 
     fn start() -> Result<Self, Self::Error> {
-        debugln!("Hello, world! From the MU-2 Tweaks plugin.");
-        Ok(Mu2Tweaks)
+        Ok(Mu2Tweaks::new())
     }
 
     fn info(&self) -> PluginInfo {
