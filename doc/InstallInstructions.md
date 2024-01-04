@@ -74,3 +74,14 @@ gen_LED RadAlt34
   LED_ROWS 0
   ROUNDING ROUND_ROUND
 ```
+
+## GPS power
+
+In your GPS config, use `com/jdeeth/mu2tweaks/gps_power` to indicate if power is available.
+
+It will be 1 if:
+- electrical power is available
+- the left radio main switch is turned on (by annunciator panel on left console)
+- the `GPS 15` circuit breaker is in
+
+otherwise it will be 0.

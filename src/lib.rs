@@ -1,28 +1,48 @@
 extern crate xplm;
 
+use xplm::flight_loop::{FlightLoop, FlightLoopCallback};
 use xplm::plugin::{Plugin, PluginInfo};
 use xplm::xplane_plugin;
 
 mod radalt;
 use radalt::FilteredRadAlt;
+mod gpspower;
+use gpspower::GpsPower;
 
-struct Mu2Tweaks {
+struct Components {
     _radalt: FilteredRadAlt,
+    _gpspower: GpsPower,
 }
 
-impl Mu2Tweaks {
+impl Components {
     fn new() -> Self {
         Self {
             _radalt: FilteredRadAlt::new(),
+            _gpspower: GpsPower::new(),
         }
     }
+}
+
+impl FlightLoopCallback for Components {
+    fn flight_loop(&mut self, _state: &mut xplm::flight_loop::LoopState) {
+        self._gpspower.update();
+    }
+}
+
+struct Mu2Tweaks {
+    _update_loop: FlightLoop,
 }
 
 impl Plugin for Mu2Tweaks {
     type Error = std::convert::Infallible;
 
     fn start() -> Result<Self, Self::Error> {
-        Ok(Mu2Tweaks::new())
+        let mut update_loop = FlightLoop::new(Components::new());
+        update_loop.schedule_immediate();
+        let plugin = Mu2Tweaks {
+            _update_loop: update_loop,
+        };
+        Ok(plugin)
     }
 
     fn info(&self) -> PluginInfo {
