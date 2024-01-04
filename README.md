@@ -12,6 +12,7 @@ This is a Rust X-Plane plugin which makes some minor tweaks for the [TOGA Simula
 
 - [x] Radio altimeter less precise
 - [x] GPS power dataref which respects fuse position
+- [x] Commands to move condition levers to MIN CRUISE and 100% positions
+- [ ] Commands to move condition levers to TAXI and EMERG STOP w/o gates
 - [ ] Leading zeros for HSI course and distance digital displays
 - [ ] Roller-counter avionics more interoperable
-- [ ] Commands to move condition levers to MIN CRUISE and 100% positions

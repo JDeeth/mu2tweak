@@ -2,16 +2,19 @@ extern crate xplm;
 
 use xplm::flight_loop::{FlightLoop, FlightLoopCallback};
 use xplm::plugin::{Plugin, PluginInfo};
-use xplm::xplane_plugin;
+use xplm::{xplane_plugin, debugln};
 
 mod radalt;
 use radalt::FilteredRadAlt;
 mod gpspower;
 use gpspower::GpsPower;
+mod condition_command;
+use condition_command::ConditionLeverCommands;
 
 struct Components {
     _radalt: FilteredRadAlt,
     _gpspower: GpsPower,
+    _cond_lvr_cmds: ConditionLeverCommands,
 }
 
 impl Components {
@@ -19,6 +22,7 @@ impl Components {
         Self {
             _radalt: FilteredRadAlt::new(),
             _gpspower: GpsPower::new(),
+            _cond_lvr_cmds: ConditionLeverCommands::new(),
         }
     }
 }
@@ -39,10 +43,7 @@ impl Plugin for Mu2Tweaks {
     fn start() -> Result<Self, Self::Error> {
         let mut update_loop = FlightLoop::new(Components::new());
         update_loop.schedule_immediate();
-        let plugin = Mu2Tweaks {
-            _update_loop: update_loop,
-        };
-        Ok(plugin)
+        Ok(Mu2Tweaks{_update_loop: update_loop})
     }
 
     fn info(&self) -> PluginInfo {

@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "mu2-tweaks"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "xplm",
 ]
@@ -67,7 +67,7 @@ checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
 [[package]]
 name = "xplm"
 version = "0.3.1"
-source = "git+https://github.com/samcrow/rust-xplm.git#ba89d4234c5b4d7088a40b2bb8f537f72e1e2df3"
+source = "git+https://github.com/JDeeth/rust-xplm.git?branch=main#bd34142f35f765782628a9fa2687c8dff055dc98"
 dependencies = [
  "thiserror",
  "xplm-sys",
