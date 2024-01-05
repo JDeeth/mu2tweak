@@ -85,3 +85,20 @@ It will be 1 if:
 - the `GPS 15` circuit breaker is in
 
 otherwise it will be 0.
+
+## Condition levers
+
+The MU-2 ships with commands to move the levers to EMERG STOP and TAXI, but they
+don't always move the levers, possibly depending on joystick setup. They might
+simulate the "lift lever to move lower than Idle" behaviour in some way.
+
+This plugin provides commands for all four labelled positions for each lever,
+which just moves the lever directly without any simulation of a gate. (It
+sets the `xscenery/mu2b60/manips/[LR]_condition_lever_rotate` datarefs directly.)
+
+To simulate the "lift lever to move lower than Idle" behaviour, use an extra
+modifier key when mapping the EmergStop command.
+
+e.g. if Numpad 1, 4 and 7 are Left Idle, MinCruise, and TakeOffLanding, then
+bind Ctrl+Numpad 1 to EmergStop. Pressing the extra modifier key simulates
+the check provided by the real-life gate.

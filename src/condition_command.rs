@@ -54,32 +54,46 @@ enum Side {
     Right,
 }
 
+impl Side {
+    fn letter_word(&self) -> (char, &str) {
+        match self {
+            Side::Left => ('L', "left"),
+            Side::Right => ('R', "right"),
+        }
+    }
+}
+
 struct ConditionLever {
+    _stop: OwnedCommand,
+    _taxi: OwnedCommand,
     _cruise: OwnedCommand,
     _full: OwnedCommand,
 }
 
 impl ConditionLever {
     fn new(side: Side) -> Self {
-        let (lr, left_right) = match side {
-            Side::Left => ('L', "left"),
-            Side::Right => ('R', "right"),
-        };
-        let rotation = format!("xscenery/mu2b60/manips/{lr}_condition_lever_rotate");
+        fn build_cmd(dataref_name: &str, side: &Side, position: f32, label: &str) -> OwnedCommand {
+            SetDatarefCmd::new(
+                dataref_name,
+                position,
+                &format!(
+                    "jdeeth/mu2tweaks/{}_condition_lever_to_{}",
+                    side.letter_word().1,
+                    label
+                ),
+                &format!("Move {} condition lever to {}", side.letter_word().1, label),
+            )
+        }
+        let dataref_name = format!(
+            "xscenery/mu2b60/manips/{}_condition_lever_rotate",
+            side.letter_word().0
+        );
 
         Self {
-            _cruise: SetDatarefCmd::new(
-                &rotation,
-                0.8,
-                &format!("jdeeth/mu2tweaks/{left_right}_condition_lever_to_MINCRUISE"),
-                &format!("Move {left_right} condition lever to MIN CRUISE"),
-            ),
-            _full: SetDatarefCmd::new(
-                &rotation,
-                1.0,
-                &format!("jdeeth/mu2tweaks/{left_right}_condition_lever_to_TAKEOFFLAND"),
-                &format!("Move {left_right} condition lever to TAKE OFF LAND"),
-            ),
+            _stop: build_cmd(&dataref_name, &side, 0.0, "EMERGSTOP"),
+            _taxi: build_cmd(&dataref_name, &side, 0.38, "TAXI"),
+            _cruise: build_cmd(&dataref_name, &side, 0.8, "MINCRUISE"),
+            _full: build_cmd(&dataref_name, &side, 1.0, "TAKEOFFLAND"),
         }
     }
 }

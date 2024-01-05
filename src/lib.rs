@@ -2,7 +2,7 @@ extern crate xplm;
 
 use xplm::flight_loop::{FlightLoop, FlightLoopCallback};
 use xplm::plugin::{Plugin, PluginInfo};
-use xplm::{xplane_plugin, debugln};
+use xplm::xplane_plugin;
 
 mod radalt;
 use radalt::FilteredRadAlt;
@@ -43,7 +43,9 @@ impl Plugin for Mu2Tweaks {
     fn start() -> Result<Self, Self::Error> {
         let mut update_loop = FlightLoop::new(Components::new());
         update_loop.schedule_immediate();
-        Ok(Mu2Tweaks{_update_loop: update_loop})
+        Ok(Mu2Tweaks {
+            _update_loop: update_loop,
+        })
     }
 
     fn info(&self) -> PluginInfo {
