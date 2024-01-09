@@ -75,6 +75,34 @@ gen_LED RadAlt34
   ROUNDING ROUND_ROUND
 ```
 
+## HSI Course and Dist readouts
+
+This can be fixed entirely in the .acf file.
+
+There's two shortcomings to gen_LED instruments:
+1. leading zeros are omitted
+2. decimal places have the same width as a digit
+
+The workaround is to change the keyframes to increase the value being displayed - so 4 becomes 1004 but you just see 004
+
+The MU-2 already draws the decimal point on the distance displays separately, so we can also multiply the distance value by 10 and eliminate a different workaround that causes the 0.1s digit to have an extra glow.
+
+Edit the .acf file in Notepad++ or similar. There are four instruments to update. In each section replace the lines that contain contradicting values e.g. `PERIOD_WIDTH -1`
+
+### `gen_LED copilot_course` and `gen_LED pilot_course`:
+
+    KEY_FRAME 0.000000 1000.000000 1.000000
+    KEY_FRAME 360.000000 1360.000000
+
+### `gen_LED copilot_distance` and `gen_LED pilot_distance`:
+
+    KEY_FRAME 0.000000 10000.000000 1.000000
+    KEY_FRAME 200.000000 12000.000000
+    DIGITS 4
+    DECIMALS 0
+    PERIOD_WIDTH 0
+
+
 ## GPS power
 
 In your GPS config, use `com/jdeeth/mu2tweaks/gps_power` to indicate if power is available.
