@@ -49,10 +49,14 @@ impl Plugin for Mu2Tweaks {
     }
 
     fn info(&self) -> PluginInfo {
+        let ts = env!("VERGEN_BUILD_TIMESTAMP")
+            .get(0..16)
+            .unwrap_or("1970-01-01T00:00");
+
         PluginInfo {
             name: String::from("MU-2 Tweaks"),
             signature: String::from("com.jdeeth.mu2tweaks"),
-            description: String::from("Tweaked UI datarefs for TOGASim MU-2"),
+            description: format!("Tweaked UI datarefs for TOGASim MU-2, compiled {}Z", ts),
         }
     }
 }
