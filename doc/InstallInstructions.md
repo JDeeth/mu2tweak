@@ -1,10 +1,8 @@
 # Installation instructions
 
-Compile the plugin (todo: release binaries) and place in `MU2/plugins/MU2Tweaks/64/`
+Compile the plugin and place in `MU2/plugins/MU2Tweaks/64/`
 
-Back up the MU-2 `.acf` files
-
-**IMPORTANT:** do not forget to back up the .acf files. Also do not expect any support from the developers or publishers if you make any changes to the supplied software.
+**IMPORTANT:** do not forget to back up any .acf and .obj files you modify. Also do not expect any support from the developers or publishers if you make any changes to the supplied software.
 
 ## Radio altimeter
 
@@ -21,7 +19,7 @@ Without access to a manual or clearer in-flight footage I've guessed at how the 
 
 ### Steps
 
-Edit the `.acf` with Notepad++ or similar
+After making a backup copy, edit the `.acf` with Notepad++ or similar
 
 Remove the existing radio altimeter:
 ```
@@ -87,7 +85,7 @@ The workaround is to change the keyframes to increase the value being displayed 
 
 The MU-2 already draws the decimal point on the distance displays separately, so we can also multiply the distance value by 10 and eliminate a different workaround that causes the 0.1s digit to have an extra glow.
 
-Edit the .acf file in Notepad++ or similar. There are four instruments to update. In each section replace the lines that contain contradicting values e.g. `PERIOD_WIDTH -1`
+After backing up the original, edit the .acf file in Notepad++ or similar. There are four instruments to update. In each section replace the lines that contain contradicting values e.g. `PERIOD_WIDTH -1`
 
 ### `gen_LED copilot_course` and `gen_LED pilot_course`:
 
@@ -130,3 +128,28 @@ modifier key when mapping the EmergStop command.
 e.g. if Numpad 1, 4 and 7 are Left Idle, MinCruise, and TakeOffLanding, then
 bind Ctrl+Numpad 1 to EmergStop. Pressing the extra modifier key simulates
 the check provided by the real-life gate.
+
+No changes are needed to use these commands.
+
+## OEM Radio stack
+
+The OEM MU-2 overrides the default X-Plane radio tuner commands, and currently does it in a way that tunes the radios in incorrect/incomplete steps. e.g. NAV radios tune in increments of 0.01 MHz rather than 0.05, COM radios tune in increments of 0.01 MHz also rather than 0.025 or 0.00833. It also does not update the frequency on the roller drum displays if something other than the user has changed the frequency.
+
+This plugin overrides the commands back, so the NAV radios tune in 0.05 MHz steps and the COM radios tune in 8.33 KHz steps.
+
+It provides replacement datarefs for animating the roller drums. To implement:
+
+1. After saving a backup copy, edit `MU2/objects/VAR_OEM_Radio Stack/VAR_OEM_Radio_Stack.obj`
+2. Search for `frequency`. There are 20 lines that start `ANIM_rotate_begin` and mention a dataref - one for each drum (5 drums per radio, 4 radios). Each dataref needs to be replaced:
+
+old|new
+-|-
+xscenery/mu2b60/radios/com1_mhz_frequency_100s | com/jdeeth/mu2tweaks/com1_mhz_100
+xscenery/mu2b60/radios/com1_mhz_frequency_10s | com/jdeeth/mu2tweaks/com1_mhz_010
+xscenery/mu2b60/radios/com1_mhz_frequency_1s | com/jdeeth/mu2tweaks/com1_mhz_001
+xscenery/mu2b60/radios/com1_khz_frequency_10s | com/jdeeth/mu2tweaks/com1_khz_10
+xscenery/mu2b60/radios/com1_khz_frequency_1s | com/jdeeth/mu2tweaks/com1_khz_01
+
+And so on for com2, nav1, and nav2.
+
+To display 8.33 kHz spacing on a 5-digit drum, the last digit is partially rotated if the next digit is 5. So `130.105` is displayed like `130.1½` with the last digit halfway between 0 and 1.

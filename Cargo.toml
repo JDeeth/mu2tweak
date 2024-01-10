@@ -1,6 +1,6 @@
 [package]
 name = "mu2-tweaks"
-version = "0.1.6"
+version = "0.1.7"
 edition = "2021"
 build = "build.rs"
 
@@ -13,7 +13,13 @@ xplm = { git = "https://github.com/samcrow/rust-xplm", branch = "master" }
 # xplm = { path = "../rust-xplm" }
 
 [build-dependencies]
-vergen = { version = "8", features = ["build"] }
+vergen = { version = "8", features = ["build", "cargo"] }
+
+[profile.dev]
+opt-level = 2
+
+[profile.dev.package."*"]
+opt-level = 3
 
 [lib]
 name = "win"

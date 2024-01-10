@@ -12,12 +12,15 @@ mod condition_command;
 use condition_command::ConditionLeverCommands;
 mod radio_command;
 use radio_command::RadioCommands;
+mod radio_anim;
+use radio_anim::RadioAnim;
 
 struct Components {
     _radalt: FilteredRadAlt,
     _gpspower: GpsPower,
     _cond_lvr_cmds: ConditionLeverCommands,
     _radio_cmds: RadioCommands,
+    _radio_anim: RadioAnim,
 }
 
 impl Components {
@@ -27,6 +30,7 @@ impl Components {
             _gpspower: GpsPower::new(),
             _cond_lvr_cmds: ConditionLeverCommands::new(),
             _radio_cmds: RadioCommands::new(),
+            _radio_anim: RadioAnim::new(),
         }
     }
 }
@@ -34,6 +38,7 @@ impl Components {
 impl FlightLoopCallback for Components {
     fn flight_loop(&mut self, _state: &mut xplm::flight_loop::LoopState) {
         self._gpspower.update();
+        self._radio_anim.update();
     }
 }
 
@@ -56,11 +61,16 @@ impl Plugin for Mu2Tweaks {
         let ts = env!("VERGEN_BUILD_TIMESTAMP")
             .get(0..16)
             .unwrap_or("1970-01-01T00:00");
+        let debug = match env!("VERGEN_CARGO_DEBUG") {
+            "true" => "debug",
+            _ => "release",
+        };
+        let opt_level = env!("VERGEN_CARGO_OPT_LEVEL");
 
         PluginInfo {
             name: String::from("MU-2 Tweaks"),
             signature: String::from("com.jdeeth.mu2tweaks"),
-            description: format!("Tweaked UI datarefs for TOGASim MU-2, compiled {}Z", ts),
+            description: format!("Tweaked UI datarefs for TOGASim MU-2, compiled {ts}Z, {debug} opt level {opt_level}"),
         }
     }
 }

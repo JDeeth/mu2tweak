@@ -1,6 +1,14 @@
 # MU-2 Tweaks
 
-This is a Rust X-Plane plugin which makes some minor tweaks for the [TOGA Simulations MU-2](https://www.x-aviation.com/catalog/product_info.php/toga-simulations-marquise-p-226).
+This is a Rust X-Plane plugin and guide to make some minor tweaks for the [TOGA Simulations MU-2](https://www.x-aviation.com/catalog/product_info.php/toga-simulations-marquise-p-226).
+
+![overview of changes](./doc/overview.png)
+
+## Usage
+
+- Compile this repo on a computer with Rust installed
+- Place compiled plugin within MU-2 aircraft folder
+- Follow [install instructions](./doc/InstallInstructions.md) to modify the MU-2 where necessary
 
 ## Target
 
@@ -14,4 +22,6 @@ This is a Rust X-Plane plugin which makes some minor tweaks for the [TOGA Simula
 - [x] GPS power dataref which respects fuse position
 - [x] Commands to move condition levers directly to all labelled positions
 - [x] Leading zeros for HSI course and distance digital displays
-- [ ] Roller-counter avionics more interoperable
+- [x] Roller-counter NAV/COM radios interoperable with other freq selectors
+- [ ] Nicer roller counter animation
+- [ ] Publish compiled plugins
