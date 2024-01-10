@@ -1,12 +1,15 @@
 [package]
 name = "mu2-tweaks"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2021"
 build = "build.rs"
 
 [dependencies]
+# latest on official github
 xplm = { git = "https://github.com/samcrow/rust-xplm", branch = "master" }
+# latest on my fork
 # xplm = { git = "https://github.com/JDeeth/rust-xplm.git", branch = "main" }
+# local copy
 # xplm = { path = "../rust-xplm" }
 
 [build-dependencies]

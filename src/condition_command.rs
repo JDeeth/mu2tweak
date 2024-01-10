@@ -6,10 +6,6 @@ use xplm::{
     },
 };
 
-trait IDataRef {
-    fn find(name: &str) -> Self;
-}
-
 struct SetDatarefCmd {
     dataref_name: String,
     dataref: Option<DataRef<f32, ReadWrite>>,
@@ -34,7 +30,7 @@ impl SetDatarefCmd {
         DataRef::find(&self.dataref_name)?.writeable()
     }
 
-    fn new(
+    fn make(
         dataref_name: &str,
         position: f32,
         command_name: &str,
@@ -73,7 +69,7 @@ struct ConditionLever {
 impl ConditionLever {
     fn new(side: Side) -> Self {
         fn build_cmd(dataref_name: &str, side: &Side, position: f32, label: &str) -> OwnedCommand {
-            SetDatarefCmd::new(
+            SetDatarefCmd::make(
                 dataref_name,
                 position,
                 &format!(

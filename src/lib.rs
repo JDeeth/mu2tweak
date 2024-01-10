@@ -10,11 +10,14 @@ mod gpspower;
 use gpspower::GpsPower;
 mod condition_command;
 use condition_command::ConditionLeverCommands;
+mod radio_command;
+use radio_command::RadioCommands;
 
 struct Components {
     _radalt: FilteredRadAlt,
     _gpspower: GpsPower,
     _cond_lvr_cmds: ConditionLeverCommands,
+    _radio_cmds: RadioCommands,
 }
 
 impl Components {
@@ -23,6 +26,7 @@ impl Components {
             _radalt: FilteredRadAlt::new(),
             _gpspower: GpsPower::new(),
             _cond_lvr_cmds: ConditionLeverCommands::new(),
+            _radio_cmds: RadioCommands::new(),
         }
     }
 }
