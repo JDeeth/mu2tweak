@@ -3,6 +3,7 @@ use std::time::Duration;
 use xplm::data::borrowed::DataRef;
 use xplm::data::owned::OwnedData;
 use xplm::data::{DataRead, DataReadWrite, ReadOnly};
+use xplm::debugln;
 use xplm::flight_loop::{FlightLoop, FlightLoopCallback, LoopState};
 
 struct FilteredRadAltData {
@@ -16,6 +17,7 @@ struct FilteredRadAltData {
 
 impl FilteredRadAltData {
     fn new() -> Self {
+        debugln!("[MU2Tweaks] New FilteredRadAltData");
         let source_dr = "sim/cockpit2/gauges/indicators/radio_altimeter_height_ft_pilot";
         let output_dr = "com/jdeeth/mu2tweaks/radio_altimeter_height_ft_pilot";
         Self {
@@ -58,6 +60,7 @@ pub struct FilteredRadAlt {
 
 impl FilteredRadAlt {
     pub fn new() -> Self {
+        debugln!("[MU2Tweaks] New FilteredRadAlt");
         let data = FilteredRadAltData::new();
         let mut flight_loop = FlightLoop::new(data);
         flight_loop.schedule_after(Duration::from_micros(500));

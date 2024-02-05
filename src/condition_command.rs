@@ -1,9 +1,8 @@
 use xplm::{
-    command::{CommandHandler, OwnedCommand},
-    data::{
+    command::{CommandHandler, OwnedCommand}, data::{
         borrowed::{DataRef, FindError},
         DataReadWrite, ReadWrite,
-    },
+    }, debugln
 };
 
 struct SetDatarefCmd {
@@ -36,6 +35,7 @@ impl SetDatarefCmd {
         command_name: &str,
         description: &str,
     ) -> OwnedCommand {
+        debugln!("[MU2Tweaks] New SetDatarefCmd {command_name}");
         let handler = SetDatarefCmd {
             dataref_name: dataref_name.to_string(),
             dataref: None,
@@ -68,6 +68,7 @@ struct ConditionLever {
 
 impl ConditionLever {
     fn new(side: Side) -> Self {
+        debugln!("[MU2Tweaks] New ConditionLever");
         fn build_cmd(dataref_name: &str, side: &Side, position: f32, label: &str) -> OwnedCommand {
             SetDatarefCmd::make(
                 dataref_name,
@@ -101,6 +102,7 @@ pub struct ConditionLeverCommands {
 
 impl ConditionLeverCommands {
     pub fn new() -> Self {
+        debugln!("[MU2Tweaks] New ConditionLeverCommands");
         Self {
             _left_lever: ConditionLever::new(Side::Left),
             _right_lever: ConditionLever::new(Side::Right),

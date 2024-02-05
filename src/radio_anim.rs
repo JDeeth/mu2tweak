@@ -1,4 +1,4 @@
-use xplm::data::{borrowed::DataRef, owned::OwnedData, DataRead, DataReadWrite, ReadOnly};
+use xplm::{data::{borrowed::DataRef, owned::OwnedData, DataRead, DataReadWrite, ReadOnly}, debugln};
 
 /// Replacement datarefs for the NAV/COM roller digits in the MU-2 OEM radio stack
 
@@ -48,7 +48,7 @@ impl ComKhzDrums {
     fn update(&mut self) {
         let freq = self.source.get();
         let _01 = (freq % 100) as f32 / 10.;
-        let _10 = (freq / 100) as f32 + 0f32.max(0.6 * (_01 - 9.));
+        let _10 = (freq / 100) as f32 + 0f32.max(0.3 * (_01 - 9.));
         self.drum_01.set(_01);
         self.drum_10.set(_10);
     }
@@ -84,6 +84,7 @@ pub struct RadioAnim {
 
 impl RadioAnim {
     pub fn new() -> Self {
+        debugln!("[MU2Tweaks] New RadioAnim");
         let prefix = |drum: &str| format!("com/jdeeth/mu2tweaks/{drum}");
         Self {
             mhz: [

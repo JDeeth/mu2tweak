@@ -1,6 +1,12 @@
 # Installation instructions
 
-Compile the plugin and place in `MU2/plugins/MU2Tweaks/64/`
+With Rust installed, `cargo build --release`. Copy the resulting binary to the aircraft plugins folder.
+
+Alternatively (Windows only for now) find the `mu2tweaks` subfolder in the `compiled` folder, copy it into `MU2/plugins`, where `MU2` is your X-Plane MU2 aircraft folder
+
+You should have something like `X-Plane/Aircraft/Mu2/plugins/mu2tweaks/win_x64/mu2tweaks.xpl`
+
+To check the plugin version, view its description in the plugin manager in X-Plane.
 
 **IMPORTANT:** do not forget to back up any .acf and .obj files you modify. Also do not expect any support from the developers or publishers if you make any changes to the supplied software.
 
@@ -135,9 +141,9 @@ No changes are needed to use these commands.
 
 The OEM MU-2 overrides the default X-Plane radio tuner commands, and currently does it in a way that tunes the radios in incorrect/incomplete steps. e.g. NAV radios tune in increments of 0.01 MHz rather than 0.05, COM radios tune in increments of 0.01 MHz also rather than 0.025 or 0.00833. It also does not update the frequency on the roller drum displays if something other than the user has changed the frequency.
 
-This plugin overrides the commands back, so the NAV radios tune in 0.05 MHz steps and the COM radios tune in 8.33 KHz steps.
+This plugin provides new commands that increment the frequencies correctly, and replacement datarefs for animating the roller drums.
 
-It provides replacement datarefs for animating the roller drums. To implement:
+To implement:
 
 1. After saving a backup copy, edit `MU2/objects/VAR_OEM_Radio Stack/VAR_OEM_Radio_Stack.obj`
 2. Search for `frequency`. There are 20 lines that start `ANIM_rotate_begin` and mention a dataref - one for each drum (5 drums per radio, 4 radios). Each dataref needs to be replaced:
@@ -151,5 +157,7 @@ xscenery/mu2b60/radios/com1_khz_frequency_10s | com/jdeeth/mu2tweaks/com1_khz_10
 xscenery/mu2b60/radios/com1_khz_frequency_1s | com/jdeeth/mu2tweaks/com1_khz_01
 
 And so on for com2, nav1, and nav2.
+
+Also replace the `ATTR_manip_command_knob` entries to use `mu2tweaks/com1_fine_up`, `mu2tweaks/com1_fine_down`, etc for all four radios.
 
 To display 8.33 kHz spacing on a 5-digit drum, the last digit is partially rotated if the next digit is 5. So `130.105` is displayed like `130.1½` with the last digit halfway between 0 and 1.

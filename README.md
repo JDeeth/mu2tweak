@@ -6,7 +6,7 @@ This is a Rust X-Plane plugin and guide to make some minor tweaks for the [TOGA 
 
 ## Usage
 
-- Compile this repo on a computer with Rust installed
+- Compile the plugin, or use the provided Windows compilation
 - Place compiled plugin within MU-2 aircraft folder
 - Follow [install instructions](./doc/InstallInstructions.md) to modify the MU-2 where necessary
 
@@ -23,5 +23,7 @@ This is a Rust X-Plane plugin and guide to make some minor tweaks for the [TOGA 
 - [x] Commands to move condition levers directly to all labelled positions
 - [x] Leading zeros for HSI course and distance digital displays
 - [x] Roller-counter NAV/COM radios interoperable with other freq selectors
+- [x] Provide Windows plugin
 - [ ] Nicer roller counter animation
-- [ ] Publish compiled plugins
+- [ ] Persist / default more switches e.g. audio panel, brightness knobs
+- [ ] Provide Mac/Linux plugins
