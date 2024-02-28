@@ -19,7 +19,7 @@ fn change_com_khz(freq: i32, step: i32) -> i32 {
 
 fn change_nav_khz(freq: i32, step: i32) -> i32 {
     let (f10, f01) = (freq.div_euclid(10), freq.rem_euclid(10));
-    let valid_01 = [0i32, 2, 5, 7];
+    let valid_01 = [0i32, 5];
     let valid_count = valid_01.len() as i32;
     let new_channel =
         f10 * valid_count + valid_01.iter().position(|&x| f01 <= x).unwrap_or(0) as i32 + step;
