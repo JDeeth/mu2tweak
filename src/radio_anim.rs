@@ -1,7 +1,11 @@
-use xplm::{data::{borrowed::DataRef, owned::OwnedData, DataRead, DataReadWrite, ReadOnly}, debugln};
+use xplm::{
+    data::{borrowed::DataRef, owned::OwnedData, DataRead, DataReadWrite, ReadOnly},
+    debugln,
+};
+
+use crate::component::PluginComponent;
 
 /// Replacement datarefs for the NAV/COM roller digits in the MU-2 OEM radio stack
-
 struct MhzDrums {
     source: DataRef<i32, ReadOnly>,
     drum_100: OwnedData<f32, ReadOnly>,
@@ -47,10 +51,10 @@ impl ComKhzDrums {
     }
     fn update(&mut self) {
         let freq = self.source.get();
-        let _01 = (freq % 100) as f32 / 10.;
-        let _10 = (freq / 100) as f32 + 0f32.max(0.3 * (_01 - 9.));
-        self.drum_01.set(_01);
-        self.drum_10.set(_10);
+        let digit_01 = (freq % 100) as f32 / 10.;
+        let digit_10 = (freq / 100) as f32 + 0f32.max(0.3 * (digit_01 - 9.));
+        self.drum_01.set(digit_01);
+        self.drum_10.set(digit_10);
     }
 }
 
@@ -127,8 +131,9 @@ impl RadioAnim {
             ],
         }
     }
-
-    pub fn update(&mut self) {
+}
+impl PluginComponent for RadioAnim {
+    fn update(&mut self, _tdelta: std::time::Duration) {
         self.mhz.iter_mut().for_each(|d| d.update());
         self.com_khz.iter_mut().for_each(|d| d.update());
         self.nav_khz.iter_mut().for_each(|d| d.update());

@@ -1,9 +1,13 @@
 use xplm::{
-    command::{CommandHandler, OwnedCommand}, data::{
+    command::{CommandHandler, OwnedCommand},
+    data::{
         borrowed::{DataRef, FindError},
         DataReadWrite, ReadWrite,
-    }, debugln
+    },
+    debugln,
 };
+
+use crate::component::PluginComponent;
 
 struct SetDatarefCmd {
     dataref_name: String,
@@ -109,3 +113,5 @@ impl ConditionLeverCommands {
         }
     }
 }
+
+impl PluginComponent for ConditionLeverCommands {}

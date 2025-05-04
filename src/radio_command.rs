@@ -4,6 +4,8 @@ use xplm::{
     debugln,
 };
 
+use crate::component::PluginComponent;
+
 fn change_com_khz(freq: i32, step: i32) -> i32 {
     let (f100, f011) = (freq.div_euclid(100), freq.rem_euclid(100));
     let valid_011 = [
@@ -97,6 +99,7 @@ impl RadioCommands {
         }
     }
 }
+impl PluginComponent for RadioCommands {}
 
 #[cfg(test)]
 mod tests {

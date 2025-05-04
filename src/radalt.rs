@@ -6,6 +6,8 @@ use xplm::data::{DataRead, DataReadWrite, ReadOnly};
 use xplm::debugln;
 use xplm::flight_loop::{FlightLoop, FlightLoopCallback, LoopState};
 
+use crate::component::PluginComponent;
+
 struct FilteredRadAltData {
     source: DataRef<f32, ReadOnly>,
     output: OwnedData<f32, ReadOnly>,
@@ -69,3 +71,5 @@ impl FilteredRadAlt {
         }
     }
 }
+
+impl PluginComponent for FilteredRadAlt {}

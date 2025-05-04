@@ -1,4 +1,8 @@
+use std::time::Duration;
+
 use xplm::data::{borrowed::DataRef, DataRead, DataReadWrite, ReadWrite};
+
+use crate::component::PluginComponent;
 
 /// Link transmit knob to functional COM1/COM2 transmit selection
 ///
@@ -23,8 +27,8 @@ impl Default for TransmitSelector {
     }
 }
 
-impl TransmitSelector {
-    pub fn update(&mut self) {
+impl PluginComponent for TransmitSelector {
+    fn update(&mut self, _tdelta: Duration) {
         // Transmit knob
         // 0: COM1
         // 1: COM2

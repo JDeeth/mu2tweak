@@ -1,49 +1,47 @@
 extern crate xplm;
 
+use component::PluginComponent;
+use condition_command::ConditionLeverCommands;
+use gpspower::GpsPower;
+use radalt::FilteredRadAlt;
+use radio_anim::RadioAnim;
+use radio_command::RadioCommands;
+use transmit_selector::TransmitSelector;
 use xplm::flight_loop::{FlightLoop, FlightLoopCallback};
 use xplm::plugin::{Plugin, PluginInfo};
 use xplm::{debugln, xplane_plugin};
 
-mod radalt;
-use radalt::FilteredRadAlt;
-mod gpspower;
-use gpspower::GpsPower;
+mod component;
 mod condition_command;
-use condition_command::ConditionLeverCommands;
-mod radio_command;
-use radio_command::RadioCommands;
+mod gpspower;
+mod radalt;
 mod radio_anim;
-use radio_anim::RadioAnim;
+mod radio_command;
 mod transmit_selector;
-use transmit_selector::TransmitSelector;
 
 struct Components {
-    _radalt: FilteredRadAlt,
-    _gpspower: GpsPower,
-    _cond_lvr_cmds: ConditionLeverCommands,
-    _radio_cmds: RadioCommands,
-    _radio_anim: RadioAnim,
-    _transmit_selector: TransmitSelector,
+    components: [Box<dyn PluginComponent>; 6],
 }
 
 impl Components {
     fn new() -> Self {
         Self {
-            _radalt: FilteredRadAlt::new(),
-            _gpspower: GpsPower::new(),
-            _cond_lvr_cmds: ConditionLeverCommands::new(),
-            _radio_cmds: RadioCommands::new(),
-            _radio_anim: RadioAnim::new(),
-            _transmit_selector: TransmitSelector::default(),
+            components: [
+                Box::new(ConditionLeverCommands::new()),
+                Box::new(FilteredRadAlt::new()),
+                Box::new(GpsPower::new()),
+                Box::new(RadioAnim::new()),
+                Box::new(RadioCommands::new()),
+                Box::new(TransmitSelector::default()),
+            ],
         }
     }
 }
 
 impl FlightLoopCallback for Components {
-    fn flight_loop(&mut self, _state: &mut xplm::flight_loop::LoopState) {
-        self._gpspower.update();
-        self._radio_anim.update();
-        self._transmit_selector.update();
+    fn flight_loop(&mut self, state: &mut xplm::flight_loop::LoopState) {
+        let tdelta = state.since_last_call();
+        let _ = self.components.iter_mut().map(|c| c.update(tdelta));
     }
 }
 
