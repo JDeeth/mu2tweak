@@ -25,7 +25,7 @@ This is a Rust X-Plane plugin and guide to make some minor tweaks for the [TOGA 
 - [x] Roller-counter NAV/COM radios interoperable with other freq selectors
 - [x] Provide Windows plugin
 - [x] Make transmit selector knob work for XPilot
-- [ ] Make rotating beacon turn through 360°
+- [x] Make rotating beacon turn through 360°
 - [ ] Stop transponder reply light when in standby
 - [ ] Nicer roller counter animation for radios
 - [ ] Fix transponder animation rolling backwards between 0 and 7

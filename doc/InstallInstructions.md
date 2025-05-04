@@ -161,3 +161,16 @@ And so on for com2, nav1, and nav2.
 Also replace the `ATTR_manip_command_knob` entries to use `mu2tweaks/com1_fine_up`, `mu2tweaks/com1_fine_down`, etc for all four radios.
 
 To display 8.33 kHz spacing on a 5-digit drum, the last digit is partially rotated if the next digit is 5. So `130.105` is displayed like `130.1½` with the last digit halfway between 0 and 1.
+
+## Rotating anti-collision beacons
+
+As of 2.1 the anti-collision beacons don't rotate, but oscillate back and forth.
+
+The plugin provides a new dataref. Edit `objects/Exterior_Lights.obj` and replace the **two** references to:
+```
+xscenery/mu2b60/lights/beacon_oscillator
+```
+with
+```
+jdeeth/mu2tweaks/beacon_oscillator
+```

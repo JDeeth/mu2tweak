@@ -1,5 +1,6 @@
 extern crate xplm;
 
+use beacon::Beacon;
 use component::PluginComponent;
 use condition_command::ConditionLeverCommands;
 use gpspower::GpsPower;
@@ -11,6 +12,7 @@ use xplm::flight_loop::{FlightLoop, FlightLoopCallback};
 use xplm::plugin::{Plugin, PluginInfo};
 use xplm::{debugln, xplane_plugin};
 
+mod beacon;
 mod component;
 mod condition_command;
 mod gpspower;
@@ -20,7 +22,7 @@ mod radio_command;
 mod transmit_selector;
 
 struct Components {
-    components: [Box<dyn PluginComponent>; 6],
+    components: [Box<dyn PluginComponent>; 7],
 }
 
 impl Components {
@@ -33,6 +35,7 @@ impl Components {
                 Box::new(RadioAnim::new()),
                 Box::new(RadioCommands::new()),
                 Box::new(TransmitSelector::default()),
+                Box::new(Beacon::new()),
             ],
         }
     }
@@ -41,7 +44,9 @@ impl Components {
 impl FlightLoopCallback for Components {
     fn flight_loop(&mut self, state: &mut xplm::flight_loop::LoopState) {
         let tdelta = state.since_last_call();
-        let _ = self.components.iter_mut().map(|c| c.update(tdelta));
+        for c in &mut self.components {
+            c.update(tdelta);
+        }
     }
 }
 
