@@ -1,5 +1,7 @@
 extern crate xplm;
 
+use std::time::Duration;
+
 use beacon::Beacon;
 use component::PluginComponent;
 use condition_command::ConditionLeverCommands;
@@ -8,6 +10,8 @@ use radalt::FilteredRadAlt;
 use radio_anim::RadioAnim;
 use radio_command::RadioCommands;
 use transmit_selector::TransmitSelector;
+use xplm::data::borrowed::DataRef;
+use xplm::data::DataRead;
 use xplm::flight_loop::{FlightLoop, FlightLoopCallback};
 use xplm::plugin::{Plugin, PluginInfo};
 use xplm::{debugln, xplane_plugin};
@@ -22,12 +26,14 @@ mod radio_command;
 mod transmit_selector;
 
 struct Components {
+    sim_speed: DataRef<f32>,
     components: [Box<dyn PluginComponent>; 7],
 }
 
 impl Components {
     fn new() -> Self {
         Self {
+            sim_speed: DataRef::find("sim/time/sim_speed_actual").unwrap(),
             components: [
                 Box::new(ConditionLeverCommands::new()),
                 Box::new(FilteredRadAlt::new()),
@@ -43,7 +49,10 @@ impl Components {
 
 impl FlightLoopCallback for Components {
     fn flight_loop(&mut self, state: &mut xplm::flight_loop::LoopState) {
-        let tdelta = state.since_last_call();
+        let tdelta = match self.sim_speed.get() {
+            x if x.is_nan() => Duration::default(),
+            x => state.since_last_call().mul_f32(x),
+        };
         for c in &mut self.components {
             c.update(tdelta);
         }
