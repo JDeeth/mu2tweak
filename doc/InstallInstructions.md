@@ -174,3 +174,19 @@ with
 ```
 jdeeth/mu2tweaks/beacon_oscillator
 ```
+
+## Transponder Reply light
+
+This is default X-Plane behaviour, where the Reply light flashes even with the
+transponder in standby mode. The plugin provides an alternative dataref that
+doesn't do this.
+
+To use it, edit `objects/LIT_items_OEM.obj` (and for other versions too if
+needed) to change:
+```
+sim/cockpit2/radios/indicators/transponder_brightness
+```
+with
+```
+jdeeth/mu2tweaks/transponder_brightness
+```

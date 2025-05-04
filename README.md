@@ -26,7 +26,7 @@ This is a Rust X-Plane plugin and guide to make some minor tweaks for the [TOGA 
 - [x] Provide Windows plugin
 - [x] Make transmit selector knob work for XPilot
 - [x] Make rotating beacon turn through 360°
-- [ ] Stop transponder reply light when in standby
+- [x] Stop transponder reply light when in standby
 - [ ] Nicer roller counter animation for radios
 - [ ] Fix transponder animation rolling backwards between 0 and 7
 - [ ] Provide Mac/Linux plugins

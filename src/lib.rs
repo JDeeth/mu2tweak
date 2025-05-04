@@ -10,6 +10,7 @@ use radalt::FilteredRadAlt;
 use radio_anim::RadioAnim;
 use radio_command::RadioCommands;
 use transmit_selector::TransmitSelector;
+use transponder_light::TransponderLight;
 use xplm::data::borrowed::DataRef;
 use xplm::data::DataRead;
 use xplm::flight_loop::{FlightLoop, FlightLoopCallback};
@@ -24,10 +25,11 @@ mod radalt;
 mod radio_anim;
 mod radio_command;
 mod transmit_selector;
+mod transponder_light;
 
 struct Components {
     sim_speed: DataRef<f32>,
-    components: [Box<dyn PluginComponent>; 7],
+    components: [Box<dyn PluginComponent>; 8],
 }
 
 impl Components {
@@ -42,6 +44,7 @@ impl Components {
                 Box::new(RadioCommands::new()),
                 Box::new(TransmitSelector::default()),
                 Box::new(Beacon::new()),
+                Box::new(TransponderLight::new()),
             ],
         }
     }
