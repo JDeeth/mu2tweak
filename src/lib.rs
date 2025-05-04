@@ -14,6 +14,8 @@ mod radio_command;
 use radio_command::RadioCommands;
 mod radio_anim;
 use radio_anim::RadioAnim;
+mod transmit_selector;
+use transmit_selector::TransmitSelector;
 
 struct Components {
     _radalt: FilteredRadAlt,
@@ -21,6 +23,7 @@ struct Components {
     _cond_lvr_cmds: ConditionLeverCommands,
     _radio_cmds: RadioCommands,
     _radio_anim: RadioAnim,
+    _transmit_selector: TransmitSelector,
 }
 
 impl Components {
@@ -31,6 +34,7 @@ impl Components {
             _cond_lvr_cmds: ConditionLeverCommands::new(),
             _radio_cmds: RadioCommands::new(),
             _radio_anim: RadioAnim::new(),
+            _transmit_selector: TransmitSelector::default(),
         }
     }
 }
@@ -39,6 +43,7 @@ impl FlightLoopCallback for Components {
     fn flight_loop(&mut self, _state: &mut xplm::flight_loop::LoopState) {
         self._gpspower.update();
         self._radio_anim.update();
+        self._transmit_selector.update();
     }
 }
 
