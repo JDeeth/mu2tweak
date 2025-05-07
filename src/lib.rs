@@ -5,6 +5,7 @@ use std::time::Duration;
 use beacon::Beacon;
 use component::PluginComponent;
 use condition_command::ConditionLeverCommands;
+use go_around_command::GoAroundButton;
 use gpspower::GpsPower;
 use radalt::FilteredRadAlt;
 use radio_anim::RadioAnim;
@@ -20,6 +21,7 @@ use xplm::{debugln, xplane_plugin};
 mod beacon;
 mod component;
 mod condition_command;
+mod go_around_command;
 mod gpspower;
 mod radalt;
 mod radio_anim;
@@ -29,7 +31,7 @@ mod transponder_light;
 
 struct Components {
     sim_speed: DataRef<f32>,
-    components: [Box<dyn PluginComponent>; 8],
+    components: [Box<dyn PluginComponent>; 9],
 }
 
 impl Components {
@@ -39,6 +41,7 @@ impl Components {
             components: [
                 Box::new(ConditionLeverCommands::new()),
                 Box::new(FilteredRadAlt::new()),
+                Box::new(GoAroundButton::default()),
                 Box::new(GpsPower::new()),
                 Box::new(RadioAnim::new()),
                 Box::new(RadioCommands::new()),
